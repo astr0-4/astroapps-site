@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Privacy Policy — Astro Apps</title>
+<meta name="description" content="Privacy policy for apps created by Astro Apps." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Hanken+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --bg: #07070d; --bg-soft: #0b0d18; --surface: rgba(255,255,255,0.028);
+    --border: rgba(255,255,255,0.09); --ink: #f3eee2; --muted: #9a9bad;
+    --faint: #65667a; --gold: #e8b54d; --star: #8ea2ff; --max: 760px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font-family: "Hanken Grotesk", sans-serif; font-weight: 300; line-height: 1.7;
+    -webkit-font-smoothing: antialiased; overflow-x: hidden; position: relative;
+  }
+  a { color: var(--star); text-decoration: none; border-bottom: 1px solid rgba(142,162,255,0.3); transition: border-color 0.2s; }
+  a:hover { border-color: var(--star); }
+
+  .sky { position: fixed; inset: 0; z-index: -2;
+    background:
+      radial-gradient(1100px 640px at 80% -10%, rgba(110,124,255,0.14), transparent 60%),
+      radial-gradient(820px 560px at 10% 8%, rgba(232,181,77,0.06), transparent 55%),
+      linear-gradient(180deg, #07070d 0%, #090a14 55%, #06060b 100%);
+  }
+  #stars { position: fixed; inset: 0; z-index: -1; display: block; }
+  .grain { position: fixed; inset: 0; z-index: 1000; pointer-events: none; opacity: 0.04; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+
+  header { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(14px);
+    background: linear-gradient(180deg, rgba(7,7,13,0.78), rgba(7,7,13,0));
+    border-bottom: 1px solid transparent; transition: border-color 0.35s, background 0.35s; }
+  header.scrolled { border-color: var(--border); background: rgba(7,7,13,0.85); }
+  .head-inner { display: flex; align-items: center; justify-content: space-between; height: 74px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-family: "Fraunces", serif; font-weight: 500; font-size: 1.16rem; letter-spacing: -0.01em; border: none; }
+  .brand:hover { border: none; }
+  .mark { width: 24px; height: 24px; position: relative; flex: none; animation: spin 26s linear infinite; }
+  .mark::before, .mark::after { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 1px solid rgba(142,162,255,0.5); }
+  .mark::after { transform: scale(0.5); border-color: var(--gold); }
+  .mark i { position: absolute; top: 50%; left: 50%; width: 4px; height: 4px; margin: -2px; border-radius: 50%; background: var(--ink); box-shadow: 0 0 8px var(--gold); }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .back { color: var(--muted); font-size: 0.93rem; border: none; }
+  .back:hover { color: var(--ink); border: none; }
+
+  main { padding: 70px 0 100px; }
+  .eyebrow { font-family: "JetBrains Mono", monospace; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); }
+  h1 { font-family: "Fraunces", serif; font-weight: 300; letter-spacing: -0.02em; font-size: clamp(2.2rem, 5vw, 3.2rem); margin: 18px 0 6px; }
+  .effective { font-family: "JetBrains Mono", monospace; font-size: 0.8rem; color: var(--faint); margin-bottom: 44px; }
+  .prose h2 { font-family: "Fraunces", serif; font-weight: 400; font-size: 1.4rem; letter-spacing: -0.01em; margin: 38px 0 12px; color: var(--ink); }
+  .prose p { color: var(--muted); margin-bottom: 16px; }
+  .prose ul { color: var(--muted); margin: 0 0 16px 0; padding-left: 22px; display: grid; gap: 8px; }
+  .prose li { padding-left: 4px; }
+  .prose li::marker { color: var(--gold); }
+
+  footer { border-top: 1px solid var(--border); padding: 38px 0; }
+  .foot-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .foot-inner small { color: var(--faint); font-size: 0.86rem; }
+  .foot-links { display: flex; gap: 24px; }
+  .foot-links a { color: var(--muted); font-size: 0.86rem; border: none; }
+  .foot-links a:hover { color: var(--ink); }
+</style>
+</head>
+<body>
+  <div class="sky"></div>
+  <canvas id="stars"></canvas>
+  <div class="grain"></div>
+
+  <header id="head">
+    <div class="wrap head-inner">
+      <a class="brand" href="/"><span class="mark"><i></i></span> Astro&nbsp;Apps</a>
+      <a class="back" href="/">← Back to home</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap prose">
+      <p class="eyebrow">Legal</p>
+      <h1>Privacy Policy</h1>
+      <p class="effective">Effective July 30th, 2020</p>
+
+      <p>This privacy policy governs your use of the software applications (“Application”) for mobile devices that are created by Alexandra Stroulger. The Application is all apps created by Alexandra Stroulger.</p>
+
+      <h2>What information does the Application obtain and how is it used?</h2>
+
+      <h2>User Provided Information</h2>
+      <p>The Application obtains the information you provide when you download and register the Application. Registration with us is optional. However, please keep in mind that you may not be able to use some of the features offered by the Application unless you register with us. When you register with us and use the Application, you generally provide</p>
+      <ul>
+        <li>Your name, email address, age, user name, password and other registration information</li>
+        <li>Transaction-related information, such as when you make purchases, respond to any offers, or download or use applications from us</li>
+        <li>Information you provide us when you contact us for help</li>
+        <li>Credit card information for purchase and use of the Application</li>
+        <li>Information you enter into our system when using the Application, such as contact information and project management information</li>
+      </ul>
+      <p>We may also use the information you provided us to contact you from time to time to provide you with important information, required notices and marketing promotions.</p>
+
+      <h2>Automatically Collected Information</h2>
+      <p>In addition, the Application may collect certain information automatically, including, but not limited to, the type of mobile device you use, your mobile devices unique device ID, the IP address of your mobile device, your mobile operating system, the type of mobile Internet browsers you use, and information about the way you use the Application.</p>
+
+      <h2>Does the Application collect precise real time location information of the device?</h2>
+      <p>This Application does not collect precise information about the location of your mobile device.</p>
+
+      <h2>Do third parties see and/or have access to information obtained by the Application?</h2>
+      <p>Yes. We will share your information with third parties only in the ways that are described in this privacy statement.</p>
+      <p>We may disclose User Provided and Automatically Collected Information as required by law, such as to comply with a subpoena, or similar legal process; when we believe in good faith that disclosure is necessary to protect our rights, protect your safety or the safety of others, investigate fraud, or respond to a government request; with our trusted services providers who work on our behalf, do not have an independent use of the information we disclose to them, and have agreed to adhere to the rules set forth in this privacy statement.</p>
+
+      <h2>Automatic Data Collection and Advertising</h2>
+      <p>We may work with analytics companies to help us understand how the Application is being used, such as the frequency and duration of usage. We work with advertisers and third party advertising networks, who need to know how you interact with advertising provided in the Application which helps us keep the cost of the Application low. Advertisers and advertising networks use some of the information collected by the Application, including, but not limited to, the unique identification ID of your mobile device and your mobile telephone number. To protect the anonymity of this information, we use an encryption technology to help ensure that these third parties can’t identify you personally. These third parties may also obtain anonymous information about other applications you’ve downloaded to your mobile device, the mobile websites you visit, your non-precise location information (e.g., your zip code), and other non-precise location information in order to help analyze and serve anonymous targeted advertising on the Application and elsewhere. We may also share encrypted versions of information you have provided in order to enable our partners to append other available information about you for analysis or advertising related use.</p>
+      <p>We may also use automatically collected data to show you personalized advertisements in the Application as well as in other websites and services (including email) we have a legitimate interest to process necessary data to Track the content you access in connection with the Service and your online behavior Deliver, target and improve our advertising and the Service</p>
+      <p>If you’d like to opt-out from third party use of this type of information to help serve targeted advertising, please visit the section entitled “Opt-out” below.</p>
+
+      <h2>What are my opt-out rights?</h2>
+      <p>There are multiple opt-out options for users of this Application: Opt-out of all information collection by uninstalling the Application: You can stop all collection of information by the Application easily by uninstalling the Application. You may use the standard uninstall processes as may be available as part of your mobile device or via the mobile application marketplace or network. Opt-out from the use of information to serve targeted advertising by advertisers and/or third party network advertisers:</p>
+      <ul>
+        <li>You can opt-out of interest-based advertising on mobile applications by checking the privacy settings of your Android or iOS device and selecting "limit ad tracking" (Apple iOS) or "opt-out of interest based ads" (Android)</li>
+        <li>You may at any time opt-out from further allowing us to have access to your location data by disabling your location settings.</li>
+      </ul>
+
+      <h2>Your other rights</h2>
+      <p>If you request, we will provide you a copy of your personal data in an electronic format. You also have the right to correct your data or have your data deleted. We will respond to all requests within a reasonable timeframe.</p>
+
+      <h2>Data Retention Policy, Managing Your Information</h2>
+      <p>We will retain User Provided data for as long as you use the Application and for a reasonable time thereafter. We will retain Automatically Collected information for up to 24 months and thereafter may store it in aggregate. If you’d like us to delete User Provided Data that you have provided via the Application, please contact us at <a href="mailto:support@tapdanceapp.com">support@tapdanceapp.com</a> and we will respond in a reasonable time. Please note that some or all of the User Provided Data may be required in order for the Application to function properly. The Application uses iCloud for storing user generated data on iOS devices. To delete this user-generated data, go to iCloud settings and disable the Application's access to iCloud storage.</p>
+
+      <h2>International Data Transfers</h2>
+      <p>Our Service is global by nature and your data can therefore be transferred to anywhere in the world. Because different countries may have different data protection laws than your own country, we take steps to ensure adequate safeguards are in place to protect your data as explained in this Policy. Adequate safeguards that our partners may use include standard contractual clauses approved by EU Commission and the Privacy Shield certification in case of transfers to the USA.</p>
+
+      <h2>Children</h2>
+      <p>We do not use the Application to knowingly solicit data from or market to children under the age of 13. If a parent or guardian becomes aware that his or her child has provided us with information without their consent, he or she should contact us at <a href="mailto:support@tapdanceapp.com">support@tapdanceapp.com</a>. We will delete such information from our files within a reasonable time.</p>
+
+      <h2>Security</h2>
+      <p>We are concerned about safeguarding the confidentiality of your information. We provide physical, electronic, and procedural safeguards to protect information we process and maintain. For example, we limit access to this information to authorized employees and contractors who need to know that information in order to operate, develop or improve our Application. Please be aware that, although we endeavor provide reasonable security for information we process and maintain, no security system can prevent all potential security breaches.</p>
+
+      <h2>Changes</h2>
+      <p>This Privacy Policy may be updated from time to time for any reason. We will notify you of any changes to our Privacy Policy by updating new Privacy Policy at <a href="https://www.astroapps.dev/privacy">https://www.astroapps.dev/privacy</a>. You are advised to consult this Privacy Policy regularly for any changes, as continued use is deemed approval of all changes.</p>
+
+      <h2>Your Consent</h2>
+      <p>By using the Application, you are consenting to our processing of your information as set forth in this Privacy Policy now and as amended by us. "Processing,” means using cookies on a computer/hand held device or using or touching information in any way, including, but not limited to, collecting, storing, deleting, using, combining and disclosing information, all of which activities will take place in Canada. If you reside outside Canada your information will be transferred, processed and stored there under Canada privacy standards.</p>
+
+      <h2>Contact us</h2>
+      <p>If you have any questions regarding privacy while using the Application, or have questions about our practices, please contact us via email at <a href="mailto:support@tapdanceapp.com">support@tapdanceapp.com</a>.</p>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap foot-inner">
+      <small>© 2026 Astro Apps. All rights reserved.</small>
+      <nav class="foot-links">
+        <a href="/#apps">Apps</a>
+        <a href="/#support">Support</a>
+        <a href="/privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    const head = document.getElementById('head');
+    addEventListener('scroll', () => head.classList.toggle('scrolled', scrollY > 8));
+    const cv = document.getElementById('stars'); const ctx = cv.getContext('2d');
+    let stars = [], w, h, dpr;
+    function build() {
+      dpr = Math.min(devicePixelRatio || 1, 2);
+      w = cv.width = innerWidth * dpr; h = cv.height = innerHeight * dpr;
+      cv.style.width = innerWidth + 'px'; cv.style.height = innerHeight + 'px';
+      const count = Math.round((innerWidth * innerHeight) / 7000);
+      stars = Array.from({ length: count }, () => ({
+        x: Math.random() * w, y: Math.random() * h, r: (Math.random() * 1.1 + 0.2) * dpr,
+        a: Math.random(), s: Math.random() * 0.015 + 0.003, warm: Math.random() > 0.82
+      }));
+    }
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      for (const st of stars) {
+        st.a += st.s; const tw = (Math.sin(st.a) + 1) / 2;
+        ctx.globalAlpha = 0.15 + tw * 0.75;
+        ctx.fillStyle = st.warm ? '#e8b54d' : '#cfd6ff';
+        ctx.beginPath(); ctx.arc(st.x, st.y, st.r, 0, Math.PI * 2); ctx.fill();
+      }
+      ctx.globalAlpha = 1; requestAnimationFrame(draw);
+    }
+    build(); draw(); addEventListener('resize', build);
+  </script>
+</body>
+</html>
