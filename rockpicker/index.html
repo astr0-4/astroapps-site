@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rock Picker — log rocks, pick rocks, even offline</title>
+<meta name="description" content="An offline-first mobile app for farmers to log rock locations in fields so a picker crew can find each rock and mark it picked.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;500;600&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --soil: #171008;
+    --soil-2: #221a0e;
+    --orange: #e64a19;
+    --orange-hot: #ff5c22;
+    --wheat: #f0e6cf;
+    --wheat-dim: #b7ab8c;
+    --picked: #7a9c5e;
+    --line: rgba(240, 230, 207, 0.14);
+    --mono: "IBM Plex Mono", monospace;
+    --display: "Archivo Black", sans-serif;
+    --body: "Archivo", sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--soil);
+    color: var(--wheat);
+    font-family: var(--body);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  /* survey-grid backdrop */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 72px 72px;
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .wrap { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── top bar ─────────────────────────── */
+  header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 0; border-bottom: 1px solid var(--line);
+    font-family: var(--mono); font-size: 13px; letter-spacing: 0.08em;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; text-transform: uppercase; }
+  .brand-pin {
+    width: 14px; height: 14px; background: var(--orange);
+    border-radius: 50% 50% 50% 0; transform: rotate(-45deg);
+  }
+  header a { color: var(--wheat-dim); text-decoration: none; }
+  header a:hover { color: var(--orange-hot); }
+
+  /* ── hero ────────────────────────────── */
+  .hero { padding: 96px 0 72px; position: relative; }
+  .tag {
+    font-family: var(--mono); font-size: 13px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--orange-hot);
+    display: inline-block; border: 1px solid var(--orange);
+    padding: 6px 12px; margin-bottom: 32px;
+    animation: rise 0.6s ease-out both;
+  }
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(44px, 8vw, 92px);
+    line-height: 0.98; text-transform: uppercase;
+    letter-spacing: -0.01em;
+    animation: rise 0.6s ease-out 0.1s both;
+  }
+  h1 .accent { color: var(--orange-hot); display: block; }
+  .hero p.lede {
+    max-width: 560px; margin-top: 28px; font-size: 19px; color: var(--wheat-dim);
+    animation: rise 0.6s ease-out 0.2s both;
+  }
+  .hero p.lede strong { color: var(--wheat); font-weight: 600; }
+  .hero-ctas { margin-top: 40px; display: flex; gap: 16px; flex-wrap: wrap; animation: rise 0.6s ease-out 0.3s both; }
+  .btn {
+    font-family: var(--mono); font-size: 14px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none;
+    padding: 16px 28px; display: inline-block; transition: all 0.15s ease;
+  }
+  .btn-primary { background: var(--orange); color: #fff; }
+  .btn-primary:hover { background: var(--orange-hot); transform: translate(-2px, -2px); box-shadow: 4px 4px 0 rgba(230, 74, 25, 0.35); }
+  .btn-ghost { border: 1px solid var(--line); color: var(--wheat); }
+  .btn-ghost:hover { border-color: var(--orange); color: var(--orange-hot); }
+  .btn-soon {
+    border: 1px dashed var(--line); color: var(--wheat-dim); cursor: default;
+    display: inline-flex; flex-direction: column; gap: 2px; padding: 11px 24px 12px;
+  }
+  .btn-soon small { font-size: 10px; letter-spacing: 0.14em; color: var(--orange-hot); font-weight: 600; }
+
+  /* decorative pin drops in hero */
+  .field-pins { position: absolute; right: 0; top: 80px; width: 300px; height: 320px; pointer-events: none; }
+  .pin {
+    position: absolute; width: 22px; height: 22px; background: var(--orange);
+    border-radius: 50% 50% 50% 0; transform: rotate(-45deg);
+    animation: drop 0.5s cubic-bezier(0.2, 0.8, 0.3, 1.2) both;
+  }
+  .pin.picked { background: var(--picked); }
+  .pin::after {
+    content: ""; position: absolute; inset: 6px; background: var(--soil); border-radius: 50%;
+  }
+  @media (max-width: 900px) { .field-pins { display: none; } }
+
+  @keyframes drop {
+    from { opacity: 0; transform: rotate(-45deg) translate(-18px, 18px); }
+    to   { opacity: 1; transform: rotate(-45deg) translate(0, 0); }
+  }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── spec strip ──────────────────────── */
+  .spec-strip {
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    background: var(--soil-2);
+  }
+  .spec-strip .wrap {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    font-family: var(--mono); font-size: 13px;
+  }
+  .spec { padding: 20px 16px; border-left: 1px solid var(--line); }
+  .spec:first-child { border-left: none; }
+  .spec b { display: block; color: var(--orange-hot); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 4px; }
+  .spec span { color: var(--wheat-dim); }
+  @media (max-width: 720px) {
+    .spec-strip .wrap { grid-template-columns: repeat(2, 1fr); }
+    .spec:nth-child(3) { border-left: none; }
+    .spec { border-top: 1px solid var(--line); }
+    .spec:nth-child(-n+2) { border-top: none; }
+  }
+
+  /* ── sections ────────────────────────── */
+  section { padding: 88px 0; }
+  .kicker {
+    font-family: var(--mono); font-size: 13px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--orange-hot); margin-bottom: 16px;
+  }
+  h2 {
+    font-family: var(--display); font-size: clamp(28px, 4.5vw, 44px);
+    text-transform: uppercase; line-height: 1.05; margin-bottom: 48px; max-width: 640px;
+  }
+
+  /* how it works */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .step { background: var(--soil-2); padding: 32px 28px 36px; position: relative; }
+  .step-num {
+    font-family: var(--display); font-size: 56px; color: transparent;
+    -webkit-text-stroke: 1.5px var(--orange); margin-bottom: 20px; line-height: 1;
+  }
+  .step h3 { font-size: 18px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 10px; }
+  .step p { color: var(--wheat-dim); font-size: 15px; }
+  @media (max-width: 720px) { .steps { grid-template-columns: 1fr; } }
+
+  /* offline section */
+  .offline { background: var(--orange); color: #1a0e06; }
+  .offline .kicker { color: #1a0e06; border-bottom: 2px solid #1a0e06; display: inline-block; padding-bottom: 4px; }
+  .offline h2 { color: #fff; max-width: 720px; }
+  .offline p { max-width: 620px; font-size: 18px; font-weight: 500; }
+  .offline .mono-note { font-family: var(--mono); font-size: 13px; margin-top: 28px; letter-spacing: 0.06em; opacity: 0.85; text-transform: uppercase; }
+
+  /* built for the cab */
+  .cab-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px 56px; }
+  .cab-item { border-top: 2px solid var(--orange); padding-top: 18px; }
+  .cab-item h3 { font-size: 17px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px; }
+  .cab-item p { color: var(--wheat-dim); font-size: 15px; }
+  @media (max-width: 720px) { .cab-list { grid-template-columns: 1fr; } }
+
+  /* ── footer ──────────────────────────── */
+  footer {
+    border-top: 1px solid var(--line); padding: 40px 0 56px;
+    font-family: var(--mono); font-size: 13px; color: var(--wheat-dim);
+    display: block;
+  }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  footer a { color: var(--wheat); text-decoration: none; border-bottom: 1px solid var(--orange); }
+  footer a:hover { color: var(--orange-hot); }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="brand"><span class="brand-pin"></span> Rock Picker</div>
+    <div style="display:flex; gap:24px;">
+      <a href="/">← Astro Apps</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+  </header>
+</div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="field-pins" aria-hidden="true">
+      <span class="pin" style="left:10%; top:15%; animation-delay:0.5s"></span>
+      <span class="pin" style="left:55%; top:5%;  animation-delay:0.7s"></span>
+      <span class="pin picked" style="left:75%; top:40%; animation-delay:0.9s"></span>
+      <span class="pin" style="left:30%; top:55%; animation-delay:1.1s"></span>
+      <span class="pin picked" style="left:60%; top:75%; animation-delay:1.3s"></span>
+      <span class="pin" style="left:5%;  top:80%; animation-delay:1.5s"></span>
+    </div>
+    <span class="tag">Offline-first · Built for the field</span>
+    <h1>Log the rock.<span class="accent">Pick the rock.</span></h1>
+    <p class="lede">
+      Rocks surface every season. <strong>Rock Picker</strong> lets anyone on the farm drop a pin
+      on crisp satellite imagery the moment they spot one — so the picker crew can drive
+      straight to it later and mark it picked. <strong>No signal required.</strong>
+    </p>
+    <div class="hero-ctas">
+      <span class="btn btn-soon"><small>Coming soon</small>App Store</span>
+      <span class="btn btn-soon"><small>Coming soon</small>Google Play</span>
+      <a class="btn btn-ghost" href="#how">How it works</a>
+    </div>
+  </div>
+</div>
+
+<div class="spec-strip">
+  <div class="wrap">
+    <div class="spec"><b>Connectivity</b><span>Fully offline after first join</span></div>
+    <div class="spec"><b>Map</b><span>Mapbox satellite, downloaded per farm</span></div>
+    <div class="spec"><b>Access</b><span>One shared farm code — no accounts</span></div>
+    <div class="spec"><b>Platform</b><span>iOS &amp; Android (Expo)</span></div>
+  </div>
+</div>
+
+<section id="how">
+  <div class="wrap">
+    <div class="kicker">Field procedure</div>
+    <h2>Three steps. Gloves on.</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Join the farm</h3>
+        <p>Enter your farm's code and your name once. Every launch after that goes straight to the map — the whole crew uses the same code.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>Tap to log</h3>
+        <p>Spot a rock from the cab? Tap it on the satellite map, confirm, done. Placement by eye on the imagery beats bouncing in-cab GPS.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>Pick &amp; mark</h3>
+        <p>The picker crew drives pin to pin, marks each rock picked (with undo for stray taps), and the pin drops off the map.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="offline">
+  <div class="wrap">
+    <div class="kicker">No bars, no problem</div>
+    <h2>Dead zones don't stop the crew.</h2>
+    <p>
+      Every pin is saved on the device first and synced to the cloud whenever a connection
+      returns. Satellite tiles for your fields download ahead of time — automatically on
+      WiFi — so the map stays crisp at deep zoom in airplane mode.
+    </p>
+    <div class="mono-note">Acceptance test: airplane mode on, app restarted, everything still works.</div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">Field UX</div>
+    <h2>Built for gloves, glare &amp; a bouncing cab</h2>
+    <div class="cab-list">
+      <div class="cab-item">
+        <h3>Max-size touch targets</h3>
+        <p>Every control is sized to hit with a work glove on the first try.</p>
+      </div>
+      <div class="cab-item">
+        <h3>High contrast</h3>
+        <p>Readable in full sun through a dusty windshield.</p>
+      </div>
+      <div class="cab-item">
+        <h3>One action to log</h3>
+        <p>Tap the rock, confirm. No forms, no typing, no menus in the field.</p>
+      </div>
+      <div class="cab-item">
+        <h3>Nothing gets lost</h3>
+        <p>Status history is append-only — every log and pick is recorded with who and when.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>ROCK PICKER — offline-first rock logging for farms</span>
+    <span>Contact: <a href="mailto:alex@astroapps.dev">alex@astroapps.dev</a></span>
+    <span><a href="privacy.html">Privacy Policy</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

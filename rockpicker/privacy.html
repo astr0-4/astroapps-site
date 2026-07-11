@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — Rock Picker</title>
+<meta name="description" content="Privacy policy for the Rock Picker mobile app.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;500;600&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --soil: #171008;
+    --soil-2: #221a0e;
+    --orange: #e64a19;
+    --orange-hot: #ff5c22;
+    --wheat: #f0e6cf;
+    --wheat-dim: #b7ab8c;
+    --line: rgba(240, 230, 207, 0.14);
+    --mono: "IBM Plex Mono", monospace;
+    --display: "Archivo Black", sans-serif;
+    --body: "Archivo", sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--soil);
+    color: var(--wheat);
+    font-family: var(--body);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 72px 72px;
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .wrap { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; padding: 0 24px; }
+
+  header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 0; border-bottom: 1px solid var(--line);
+    font-family: var(--mono); font-size: 13px; letter-spacing: 0.08em;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; text-transform: uppercase; color: var(--wheat); text-decoration: none; }
+  .brand-pin {
+    width: 14px; height: 14px; background: var(--orange);
+    border-radius: 50% 50% 50% 0; transform: rotate(-45deg);
+  }
+  header a.back { color: var(--wheat-dim); text-decoration: none; }
+  header a.back:hover { color: var(--orange-hot); }
+
+  main { padding: 72px 0 96px; }
+  .kicker {
+    font-family: var(--mono); font-size: 13px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--orange-hot); margin-bottom: 16px;
+  }
+  h1 {
+    font-family: var(--display); font-size: clamp(32px, 6vw, 56px);
+    text-transform: uppercase; line-height: 1.02;
+  }
+  .effective {
+    font-family: var(--mono); font-size: 13px; color: var(--wheat-dim);
+    margin: 20px 0 48px; letter-spacing: 0.06em;
+  }
+  h2 {
+    font-family: var(--body); font-weight: 600; font-size: 19px;
+    text-transform: uppercase; letter-spacing: 0.04em;
+    border-top: 2px solid var(--orange); padding-top: 16px; margin: 44px 0 12px;
+  }
+  p, li { color: var(--wheat-dim); font-size: 16px; }
+  p { margin-bottom: 14px; }
+  p strong { color: var(--wheat); font-weight: 600; }
+  ul { margin: 0 0 14px 0; padding-left: 24px; display: grid; gap: 8px; }
+  li::marker { color: var(--orange-hot); }
+  a { color: var(--wheat); text-decoration: none; border-bottom: 1px solid var(--orange); }
+  a:hover { color: var(--orange-hot); }
+
+  footer {
+    border-top: 1px solid var(--line); padding: 40px 0 56px;
+    font-family: var(--mono); font-size: 13px; color: var(--wheat-dim);
+  }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <a class="brand" href="./"><span class="brand-pin"></span> Rock Picker</a>
+    <a class="back" href="./">← Back</a>
+  </header>
+</div>
+
+<main>
+  <div class="wrap">
+    <div class="kicker">Legal</div>
+    <h1>Privacy Policy</h1>
+    <p class="effective">Effective July 10, 2026</p>
+
+    <p>
+      This privacy policy covers the <strong>Rock Picker</strong> mobile application,
+      created by Alexandra Stroulger (Astro Apps). Rock Picker is a tool for farm crews
+      to log rock locations in fields and mark them picked. It is built to collect as
+      little as possible: <strong>there are no user accounts, no advertising, and no
+      analytics or tracking of any kind.</strong>
+    </p>
+
+    <h2>What the app collects</h2>
+    <p>The app stores only what is needed for crews to share rock locations:</p>
+    <ul>
+      <li><strong>A name you type in.</strong> Free text, used only to label who logged or picked each rock. It is not verified and can be anything you like.</li>
+      <li><strong>Your farm's shared code.</strong> Used to scope which farm's rocks you can see and edit.</li>
+      <li><strong>Rock pins.</strong> The map locations you place by tapping, their status (logged, picked, not found), and the time and name attached to each action.</li>
+    </ul>
+    <p>
+      That's the full list. The app collects no email address, no phone number, no
+      contacts, no photos, no advertising identifiers, and no usage analytics.
+    </p>
+
+    <h2>Device location</h2>
+    <p>
+      With your permission, the app uses your device's location <strong>while the app is
+      open</strong> for two things: showing where you are on the field map, and centering
+      map downloads on your area. Your location is used on the device only — it is
+      <strong>never stored or sent to our servers</strong>. Rock positions are placed by
+      tapping the map, not from GPS. You can revoke location access at any time in your
+      device settings; the map still works without it.
+    </p>
+
+    <h2>Where your data lives</h2>
+    <p>
+      Data is saved on your device first, so the app works fully offline. When a
+      connection is available, rock pins sync to a hosted database (Supabase) so the rest
+      of your crew sees them. Anyone who has your farm's code can see and edit that
+      farm's rocks — treat the code like a shared password.
+    </p>
+
+    <h2>Third-party services</h2>
+    <ul>
+      <li><strong>Supabase</strong> stores synced farm data (rock pins, names, timestamps). See the <a href="https://supabase.com/privacy">Supabase privacy policy</a>.</li>
+      <li><strong>Mapbox</strong> provides the satellite map imagery. Mapbox may collect limited device and usage data to operate its service, as described in the <a href="https://www.mapbox.com/legal/privacy">Mapbox privacy policy</a>.</li>
+    </ul>
+    <p>We do not sell or share your information with anyone else, and no third party uses it for advertising.</p>
+
+    <h2>Data retention &amp; deletion</h2>
+    <p>
+      Uninstalling the app removes all data stored on your device, including downloaded
+      map tiles. Synced rock data stays with the farm so the rest of the crew keeps
+      working. To have a name or a farm's data removed from the server, email
+      <a href="mailto:alex@astroapps.dev">alex@astroapps.dev</a> and it will be handled
+      within a reasonable time.
+    </p>
+
+    <h2>Children</h2>
+    <p>
+      Rock Picker is a farm work tool and is not directed at children under 13. We do not
+      knowingly collect information from children. If you believe a child has provided
+      information through the app, contact us and we will delete it.
+    </p>
+
+    <h2>Changes to this policy</h2>
+    <p>
+      If this policy changes, the updated version will be posted at this page with a new
+      effective date.
+    </p>
+
+    <h2>Contact</h2>
+    <p>
+      Questions about privacy or your data:
+      <a href="mailto:alex@astroapps.dev">alex@astroapps.dev</a>.
+    </p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>ROCK PICKER — offline-first rock logging for farms</span>
+    <span><a href="./">Home</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
