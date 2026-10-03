@@ -102,14 +102,14 @@
   <div class="wrap">
     <div class="kicker">Legal</div>
     <h1>Privacy Policy</h1>
-    <p class="effective">Effective July 10, 2026</p>
+    <p class="effective">Effective September 4, 2026</p>
 
     <p>
       This privacy policy covers the <strong>Rock Picker</strong> mobile application,
       created by Alexandra Stroulger (Astro Apps). Rock Picker is a tool for farm crews
       to log rock locations in fields and mark them picked. It is built to collect as
       little as possible: <strong>there are no user accounts, no advertising, and no
-      analytics or tracking of any kind.</strong>
+      tracking across other companies' apps or websites.</strong>
     </p>
 
     <h2>What the app collects</h2>
@@ -118,10 +118,11 @@
       <li><strong>A name you type in.</strong> Free text, used only to label who logged or picked each rock. It is not verified and can be anything you like.</li>
       <li><strong>Your farm's shared code.</strong> Used to scope which farm's rocks you can see and edit.</li>
       <li><strong>Rock pins.</strong> The map locations you place by tapping, their status (logged, picked, not found), and the time and name attached to each action.</li>
+      <li><strong>Anonymous usage events.</strong> Counts of in-app actions — a rock was logged, a rock was marked picked, an offline map finished downloading, a sync failed — so we can tell whether the app is working in the field. These events carry <strong>no map coordinates, no farm codes, and no names</strong>; they identify a farm only by a random ID.</li>
     </ul>
     <p>
       That's the full list. The app collects no email address, no phone number, no
-      contacts, no photos, no advertising identifiers, and no usage analytics.
+      contacts, no photos, and no advertising identifiers.
     </p>
 
     <h2>Device location</h2>
@@ -145,7 +146,8 @@
     <h2>Third-party services</h2>
     <ul>
       <li><strong>Supabase</strong> stores synced farm data (rock pins, names, timestamps). See the <a href="https://supabase.com/privacy">Supabase privacy policy</a>.</li>
-      <li><strong>Mapbox</strong> provides the satellite map imagery. Mapbox may collect limited device and usage data to operate its service, as described in the <a href="https://www.mapbox.com/legal/privacy">Mapbox privacy policy</a>.</li>
+      <li><strong>Mapbox</strong> provides the satellite map imagery. Mapbox may collect limited device and usage data to operate its service, as described in the <a href="https://www.mapbox.com/legal/privacy">Mapbox privacy policy</a>. Mapbox's own usage/location telemetry is turned off in the app.</li>
+      <li><strong>Mixpanel</strong> receives the anonymous usage events described above, so we can see whether features work in the field. It receives no coordinates, no farm codes, and no names. See the <a href="https://mixpanel.com/legal/privacy-policy/">Mixpanel privacy policy</a>.</li>
     </ul>
     <p>We do not sell or share your information with anyone else, and no third party uses it for advertising.</p>
 
