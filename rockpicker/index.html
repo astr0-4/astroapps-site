@@ -90,8 +90,6 @@
   }
   .btn-primary { background: var(--orange); color: #fff; }
   .btn-primary:hover { background: var(--orange-hot); transform: translate(-2px, -2px); box-shadow: 4px 4px 0 rgba(230, 74, 25, 0.35); }
-  .btn-ghost { border: 1px solid var(--line); color: var(--wheat); }
-  .btn-ghost:hover { border-color: var(--orange); color: var(--orange-hot); }
   .btn-soon {
     border: 1px dashed var(--line); color: var(--wheat-dim); cursor: default;
     display: inline-flex; flex-direction: column; gap: 2px; padding: 11px 24px 12px;
@@ -140,31 +138,6 @@
     .spec:nth-child(-n+2) { border-top: none; }
   }
 
-  /* ── sections ────────────────────────── */
-  section { padding: 88px 0; }
-  .kicker {
-    font-family: var(--mono); font-size: 13px; letter-spacing: 0.18em;
-    text-transform: uppercase; color: var(--orange-hot); margin-bottom: 16px;
-  }
-  h2 {
-    font-family: var(--display); font-size: clamp(28px, 4.5vw, 44px);
-    text-transform: uppercase; line-height: 1.05; margin-bottom: 48px; max-width: 640px;
-  }
-
-  /* offline section */
-  .offline { background: var(--orange); color: #1a0e06; }
-  .offline .kicker { color: #1a0e06; border-bottom: 2px solid #1a0e06; display: inline-block; padding-bottom: 4px; }
-  .offline h2 { color: #fff; max-width: 720px; }
-  .offline p { max-width: 620px; font-size: 18px; font-weight: 500; }
-  .offline .mono-note { font-family: var(--mono); font-size: 13px; margin-top: 28px; letter-spacing: 0.06em; opacity: 0.85; text-transform: uppercase; }
-
-  /* built for the cab */
-  .cab-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px 56px; }
-  .cab-item { border-top: 2px solid var(--orange); padding-top: 18px; }
-  .cab-item h3 { font-size: 17px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px; }
-  .cab-item p { color: var(--wheat-dim); font-size: 15px; }
-  @media (max-width: 720px) { .cab-list { grid-template-columns: 1fr; } }
-
   /* ── footer ──────────────────────────── */
   footer {
     border-top: 1px solid var(--line); padding: 40px 0 56px;
@@ -208,7 +181,6 @@
     <div class="hero-ctas">
       <a class="btn btn-primary" href="https://apps.apple.com/app/id6789734754">App Store</a>
       <span class="btn btn-soon"><small>Coming soon</small>Google Play</span>
-      <a class="btn btn-ghost" href="#how">How it works</a>
     </div>
   </div>
 </div>
@@ -221,44 +193,6 @@
     <div class="spec"><b>Platform</b><span>iOS &amp; Android (Expo)</span></div>
   </div>
 </div>
-
-<section class="offline" id="how">
-  <div class="wrap">
-    <div class="kicker">No bars, no problem</div>
-    <h2>Dead zones don't stop the crew.</h2>
-    <p>
-      Every pin is saved on the device first and synced to the cloud whenever a connection
-      returns. Satellite tiles for your fields download ahead of time — automatically on
-      WiFi — so the map stays crisp at deep zoom in airplane mode.
-    </p>
-    <div class="mono-note">Acceptance test: airplane mode on, app restarted, everything still works.</div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <div class="kicker">Field UX</div>
-    <h2>Built for gloves, glare &amp; a bouncing cab</h2>
-    <div class="cab-list">
-      <div class="cab-item">
-        <h3>Max-size touch targets</h3>
-        <p>Every control is sized to hit with a work glove on the first try.</p>
-      </div>
-      <div class="cab-item">
-        <h3>High contrast</h3>
-        <p>Readable in full sun through a dusty windshield.</p>
-      </div>
-      <div class="cab-item">
-        <h3>One action to log</h3>
-        <p>Tap the rock, confirm. No forms, no typing, no menus in the field.</p>
-      </div>
-      <div class="cab-item">
-        <h3>Nothing gets lost</h3>
-        <p>Status history is append-only — every log and pick is recorded with who and when.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
 <footer>
   <div class="wrap">
