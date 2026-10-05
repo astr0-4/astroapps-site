@@ -86,7 +86,12 @@
   .btn {
     font-family: var(--mono); font-size: 14px; font-weight: 600;
     letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none;
-    padding: 16px 28px; display: inline-block; transition: all 0.15s ease;
+    padding: 16px 28px; transition: all 0.15s ease;
+    /* Centre the label even when the row stretches this button to match the
+       taller two-line Google Play one. Letter-spacing also trails the last
+       letter, so trim it off the right padding to centre horizontally. */
+    display: inline-flex; align-items: center; justify-content: center;
+    padding-right: calc(28px - 0.08em);
   }
   .btn-primary { background: var(--orange); color: #fff; }
   .btn-primary:hover { background: var(--orange-hot); transform: translate(-2px, -2px); box-shadow: 4px 4px 0 rgba(230, 74, 25, 0.35); }
